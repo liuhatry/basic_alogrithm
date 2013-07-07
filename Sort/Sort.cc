@@ -20,6 +20,34 @@ void bubbleSort(int *a, int m){
 	}
 }
 
+int partition(int *a, int l, int r){
+	int pivot = a[l];
+
+	while (l < r){
+		while (l < r && a[r] >= pivot)
+			r--;
+		if (l < r){
+			a[l++] = a[r];
+		}
+
+		while (l < r && a[l] <= pivot)
+			l++;
+		if (l < r){
+			a[r--] = a[l];
+		}
+	}
+	a[l] = pivot;
+	return l;
+}
+void quickSort(int *a, int l, int r){
+	int q;
+	if (l < r){
+		q = partition(a,l,r);
+		quickSort(a,l,q-1);
+		quickSort(a,q+1,r);
+	}
+}
+
 void insertSort(int *a, int m){
 	assert(a != NULL);
 	int temp;
@@ -79,7 +107,8 @@ int main(){
 	//bubbleSort(arr, 10);
 	//insertSort(arr, 10);
 	//selectSort(arr, 10);
-	shellSort(arr, 10);
+	//shellSort(arr, 10);
+	quickSort(arr, 0, 9);
 	for (int i = 0; i < 10; i++){
 		cout<<arr[i]<<" ";
 	}

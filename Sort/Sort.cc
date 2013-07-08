@@ -1,5 +1,6 @@
 #include <iostream>
 #include <assert.h>
+#include <cstring>
 using namespace std;
 
 void swap(int *a, int i, int j){
@@ -184,8 +185,25 @@ void mergeSort2(int *a, int len){
 	delete[] p; 
 }
 
+void countSort(int *a, int len, int max){
+	int *temp = new int[max+1];
+	memset(temp, 0, sizeof(int)*(max+1));
+	for (int i=0; i < len; i++){
+		temp[a[i]]++;
+	}
+
+	int k = 0;
+	for (int i=0; i <= max; i++){
+		while (temp[i] > 0){
+			a[k++] = i;
+			temp[i]--;
+		}
+	}
+
+	delete[] temp;
+}
 int main(){
-	int arr[10] = {2,1,3,4,5,9,0,8,7,6};
+	int arr[15] = {2,1,3,4,5,89,0,8,7,6,34,5,5,3,14};
 	//bubbleSort(arr, 10);
 	//insertSort(arr, 10);
 	//selectSort(arr, 10);
@@ -193,8 +211,9 @@ int main(){
 	//quickSort(arr, 0, 9);
 	//heapSort(arr, 10);
 	//mergeSort(arr, 10);
-	mergeSort2(arr, 10);
-	for (int i = 0; i < 10; i++){
+	//mergeSort2(arr, 10);
+	countSort(arr, 15, 89);
+	for (int i = 0; i < 15; i++){
 		cout<<arr[i]<<" ";
 	}
 	cout<<endl;

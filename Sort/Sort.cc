@@ -131,6 +131,59 @@ void heapSort(int *a, int m){
 	}
 }
 
+void merge(int *a, int *temp, int l, int mid, int r){
+
+	if (l > mid || mid > r)
+		return;
+	int i = l;
+	int l0 = l;
+	int l1 = mid+1;
+	while (l0 <= mid && l1 <= r){
+		if (a[l0] < a[l1])
+			temp[i++] = a[l0++];
+		else
+			temp[i++] = a[l1++];
+	}
+
+	while (l0 <= mid)
+		temp[i++] = a[l0++];
+	while (l1 <= r)
+		temp[i++] = a[l1++];
+
+	for (i = l; i <= r; i++)
+		a[i] = temp[i];
+}
+void _mergeSort(int *a, int *temp, int l, int r){
+	if (l < r){
+		int mid = (l+r)/2;
+		_mergeSort(a,temp,l,mid);
+		_mergeSort(a,temp,mid+1,r);
+		merge(a,temp,l,mid,r);
+	}
+}
+
+void mergeSort(int *a, int len){
+	int *p = new int[len];
+	_mergeSort(a, p, 0, len-1);
+	delete[] p;
+}
+
+void mergeSort2(int *a, int len){
+	assert(a != NULL);
+	int* p = new int[len];
+	int s = 2;
+	int i;
+	while (s <= len){
+		for (i=0; i+s<=len ; i+=s){
+			merge(a,p,i,i+s/2-1,i+s-1);
+		}
+		merge(a,p,i,i+s/2-1,len-1);
+		s *= 2;
+	}
+	merge(a,p,0,s/2-1,len-1);
+	delete[] p; 
+}
+
 int main(){
 	int arr[10] = {2,1,3,4,5,9,0,8,7,6};
 	//bubbleSort(arr, 10);
@@ -138,7 +191,9 @@ int main(){
 	//selectSort(arr, 10);
 	//shellSort(arr, 10);
 	//quickSort(arr, 0, 9);
-	heapSort(arr, 10);
+	//heapSort(arr, 10);
+	//mergeSort(arr, 10);
+	mergeSort2(arr, 10);
 	for (int i = 0; i < 10; i++){
 		cout<<arr[i]<<" ";
 	}

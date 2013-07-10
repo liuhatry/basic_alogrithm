@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 using namespace std;
 
@@ -56,12 +58,42 @@ char* Strcat(char* dest, const char* src){
 	return strD;
 }
 
+char* Itoa(int value, char* s, int radix = 10){
+	int sign = 0;
+	if ((sign = value) < 0)
+		value = -value;
+	int i = 0;
+	do {
+		s[i++] = value%radix + '0';
+	} while ((value /= 10) > 0);
+
+	if (sign < 0)
+		s[i++] = '-';
+
+	int k = i-1;
+	int j = 0;
+	char temp;
+	while (j < k){
+		temp = s[j];
+		s[j] = s[k];
+		s[k] = temp;
+		j++;
+		k--;
+	}
+	s[i] = '\0';
+	return s;
+}
+
 int main(){
 	char s[100] = "aaaaasdfsdfsdaaasd";
 	char d[] = "aa";
 	//cout<<count(s,d)<<endl;
 	//cout<<Strcmp(s,d)<<endl;
 	//cout<<Strcpy(s,d)<<endl;
-	cout<<Strcat(s,d)<<endl;
+	//cout<<Strcat(s,d)<<endl;
+	int a = -12345;
+	//sprintf(s,"%d",a);
+	//cout<<s<<endl;
+	cout<<Itoa(a,s)<<endl;
 
 }

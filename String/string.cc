@@ -84,6 +84,25 @@ char* Itoa(int value, char* s, int radix = 10){
 	return s;
 }
 
+int Atoi(const char *s){
+	assert(s != NULL);
+	int n = 0;
+	int sign, i;
+
+	for (i = 0; s[i] == ' '; i++);
+
+	sign = (s[i] == '-'? -1:1);
+	if ('-' == s[i] || '+' == s[i])
+		i++;
+	while (s[i]){
+		if (s[i] <= '9' && s[i] >= '0')
+			n = n*10 + s[i] - '0';
+		else
+			return 0;
+		i++;
+	}
+	return sign*n;
+}
 int main(){
 	char s[100] = "aaaaasdfsdfsdaaasd";
 	char d[] = "aa";
@@ -92,8 +111,10 @@ int main(){
 	//cout<<Strcpy(s,d)<<endl;
 	//cout<<Strcat(s,d)<<endl;
 	int a = -12345;
+    char ss[10] = "  -123456";
 	//sprintf(s,"%d",a);
 	//cout<<s<<endl;
-	cout<<Itoa(a,s)<<endl;
+	//cout<<Itoa(a,s)<<endl;
+	cout<<Atoi(ss)<<endl;
 
 }
